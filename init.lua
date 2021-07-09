@@ -13,21 +13,20 @@ require('options')
 require('vapour-utils')
 
 local user_config = CONFIG_PATH .. '/lua/vapour-user-config/init.lua'
-
-if not Vapour.utils.file.exists(user_config) then
-  print('User config does not exist, creating empty ' .. user_config)
-
-  local fp, err = io.open(user_config, 'w+')
-  assert(fp, err)
-  fp:write('')
-  fp:close()
-end
+if not Vapour.utils.file.exists(user_config) then Vapour.utils.file.create(user_config) end
 
 -- User config that overrides the above
 vim.cmd('luafile ' .. user_config)
 
 -- General
 require('plugins')
+vim.cmd[[
+  packadd nvim-treesitter
+  packadd nvim-lspconfig
+  packadd nvim-compe
+  packadd nvim-autopairs
+  packadd which-key.nvim
+]]
 require('keybindings')
 
 -- Syntax and Visual
